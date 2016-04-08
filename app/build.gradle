@@ -1,0 +1,50 @@
+apply plugin: 'application'
+apply plugin: 'spring-boot'
+apply plugin: 'docker'
+
+mainClassName = 'com.example.DemoApplication'
+
+jar {
+    baseName = 'spring-boot-docker-template'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-actuator-docs')
+
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+//    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+    runtime('org.postgresql:postgresql:9.4.1208.jre7')
+
+
+    runtime("com.h2database:h2:1.4.191")
+    compile("org.springframework.boot:spring-boot-devtools")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
+
+//It is possible to define a default value, it will be used in dev and production
+//applicationDefaultJvmArgs = ["-Xdebug -Xrunjdwp:server=y,transport=dt_socket,suspend=n"]
+//applicationDefaultJvmArgs = ["-Djava.security.egd=file:/dev/./urandom"]
+//applicationDefaultJvmArgs = ["-Djava.security.egd=file:/dev/./urandom", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
+
+bootRun {
+    jvmArgs = ["-Djava.security.egd=file:/dev/./urandom", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
+}
+
+group = 'pedramrn'
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = false
+    applicationName = jar.baseName
+    dockerfile = file('src/main/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
