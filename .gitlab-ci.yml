@@ -16,28 +16,27 @@ stages:
 build_job:
   stage: build
   script:
-    - gradle clean assemble
+    - gradle clean bootRepackage
   artifacts:
     paths:
       - app/build/libs
 
-test_job:
-  stage: test
-  script:
-    - gradle test
-  artifacts:
-    paths:
-      - app/build/libs
+#test_job:
+#  stage: test
+#  script:
+#    - gradle test
+#  artifacts:
+#    paths:
+#      - app/build/libs
 
 deploy_job:
   variables:
     BUILD_IMAGE: -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
-  build:
-    image: pedramrn/docker-buidler:1
+  image: pedramrn/docker-buidler:1
 #    image: docker:latest
-    stage: deploy
-  #  only:
-  #    - master
-    script:
-      - ls -la app/build/libs
+  stage: deploy
+#  only:
+#    - master
+  script:
+    - ls -la app/build/libs
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
