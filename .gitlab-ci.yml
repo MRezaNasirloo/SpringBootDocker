@@ -16,6 +16,7 @@ test_job:
     - gradle test
 
 deploy_job:
+  image: docker:latest
   stage: deploy
 #  only:
 #    - master
