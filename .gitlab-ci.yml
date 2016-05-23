@@ -30,10 +30,14 @@ test_job:
       - app/build/libs
 
 deploy_job:
-  image: docker:latest
-  stage: deploy
-#  only:
-#    - master
-  script:
-    - ls -la app/build/libs
-    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
+  variables:
+    BUILD_IMAGE: -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
+  build:
+    image: pedramrn/docker-buidler:1
+#    image: docker:latest
+    stage: deploy
+  #  only:
+  #    - master
+    script:
+      - ls -la app/build/libs
+#      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
