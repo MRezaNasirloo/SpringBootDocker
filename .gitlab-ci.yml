@@ -14,8 +14,8 @@ build_job:
     - gradle clean assemble
   cache:
       paths:
-        - /build
-        - /app/build
+        - build
+        - app/build
 
 test_job:
   stage: test
@@ -23,7 +23,7 @@ test_job:
     - gradle test
   cache:
     paths:
-      - /app/build/libs
+      - app/build/libs
 
 deploy_job:
   image: docker:latest
