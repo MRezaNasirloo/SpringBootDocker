@@ -19,8 +19,7 @@ build_job:
     - gradle clean assemble
   artifacts:
     paths:
-      - build/
-      - app/build
+      - app/build/libs
 
 test_job:
   stage: test
