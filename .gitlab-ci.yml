@@ -3,6 +3,11 @@ image: pedramrn/java-gradle:with-compose
 services:
 - docker:dind
 
+cache:
+  paths:
+    - build
+    - app/build
+
 stages:
   - build
   - test
@@ -12,10 +17,6 @@ build_job:
   stage: build
   script:
     - gradle clean assemble
-  cache:
-    paths:
-      - build
-      - app/build
   artifacts:
     paths:
       - build/
@@ -25,12 +26,9 @@ test_job:
   stage: test
   script:
     - gradle test
-  cache:
-    paths:
-      - app/build
   artifacts:
     paths:
-      - app/build
+      - app/build/libs
 
 deploy_job:
   image: docker:latest
