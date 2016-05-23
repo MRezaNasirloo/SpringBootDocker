@@ -39,4 +39,5 @@ deploy_job:
 #    - master
   script:
     - ls -la app/build/libs
+    - docker run pedramrn/docker-buidler:1
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
