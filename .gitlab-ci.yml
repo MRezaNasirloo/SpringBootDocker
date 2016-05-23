@@ -16,7 +16,7 @@ test_job:
     - gradle test
 
 deploy_job:
-  image: docker:latest
+  image: docker:dind
   stage: deploy
 #  only:
 #    - master
