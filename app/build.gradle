@@ -40,7 +40,7 @@ group = 'pedramrn'
 task buildDocker(type: Docker, dependsOn: build) {
     push = false
     applicationName = jar.baseName
-    dockerfile = file('src/main/Dockerfile')
+    dockerfile = file('src/main/docker/Dockerfile')
     doFirst {
         copy {
             from jar
