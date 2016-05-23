@@ -13,9 +13,13 @@ build_job:
   script:
     - gradle clean assemble
   cache:
-      paths:
-        - build
-        - app/build
+    paths:
+      - build
+      - app/build
+  artifacts:
+    paths:
+      - build/
+      - app/build
 
 test_job:
   stage: test
@@ -23,7 +27,10 @@ test_job:
     - gradle test
   cache:
     paths:
-      - app/build/libs
+      - app/build
+  artifacts:
+    paths:
+      - app/build
 
 deploy_job:
   image: docker:latest
@@ -31,4 +38,5 @@ deploy_job:
 #  only:
 #    - master
   script:
+    - ls -la app/build/libs
     - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
