@@ -1,5 +1,8 @@
 image: pedramrn/java-gradle:with-compose
 
+services:
+- docker:dind
+
 stages:
   - build
   - test
@@ -16,7 +19,7 @@ test_job:
     - gradle test
 
 deploy_job:
-  image: docker:dind
+  image: docker:latest
   stage: deploy
 #  only:
 #    - master
