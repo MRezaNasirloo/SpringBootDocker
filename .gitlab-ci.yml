@@ -1,0 +1,23 @@
+image: pedramrn/java-gradle:with-compose
+
+stages:
+  - build
+  - test
+  - deploy
+
+build_job:
+  stage: build
+  script:
+    - gradle clean build
+
+test_job:
+  stage: test
+  script:
+    - gradle test
+
+deploy_job:
+  stage: deploy
+#  only:
+#    - master
+  script:
+    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
