@@ -1,10 +1,3 @@
-cache:
-  paths:
-    - build
-    - app/build
-    - .gradle/wrapper
-    - .gradle/caches
-
 stages:
   - build
   - test
@@ -18,25 +11,9 @@ build_job:
     paths:
       - app/build/libs
 
-#test_job:
-#  stage: test
-#  script:
-#    - gradle test
-#  artifacts:
-#    paths:
-#      - app/build/libs
-
 deploy_job:
-#  variables:
-#    BUILD_IMAGE: pedramrn/webapp:latest
-#  image: pedramrn/docker-buidler:3
-#    image: docker:latest
   stage: deploy
 #  only:
 #    - master
   script:
       - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
-#    - docker-compose -f docker-compose-prod.yml pull
-#    - docker build -f app/src/main/docker/Dockerfile -t
-#    - docker-compose -f docker-compose-prod.yml up
-
