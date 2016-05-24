@@ -12,7 +12,7 @@ build_test_job:
     downloadable: false
 
 deploy_job:
-  stage: deployc
+  stage: deploy
 #  only:
 #    - master
 #    - tags
