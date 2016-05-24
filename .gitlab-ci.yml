@@ -17,11 +17,10 @@ stages:
   - deploy
 
 build_job:
+  image: pedramrn/java-gradle:with-compose
   stage: build
   script:
-    - docker-compose -f docker-compose-ci.yml pull
-    - docker-compose -f docker-compose-ci.yml build
-    - docker-compose -f docker-compose-ci.yml up
+    - gradle build
   artifacts:
     paths:
       - app/build/libs
