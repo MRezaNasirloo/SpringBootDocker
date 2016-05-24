@@ -16,8 +16,8 @@ deploy_job:
   only:
 #    - tags
     - master
-  except:
-    - branches
+#  except:
+#    - branches
   script:
     - docker login registry.gitlab.com
     - docker build -f app/src/main/docker/Dockerfile -t registry.gitlab.com/6thsolution/spring-boot-docker:$CI_BUILD_TAG .
