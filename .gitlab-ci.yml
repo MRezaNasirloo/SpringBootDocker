@@ -1,8 +1,5 @@
 image: pedramrn/java-gradle:with-compose
 
-services:
-- docker:dind
-
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
@@ -10,6 +7,8 @@ cache:
   paths:
     - build
     - app/build
+    - .gradle/wrapper
+    - .gradle/caches
 
 stages:
   - build
@@ -41,5 +40,10 @@ deploy_job:
 #  only:
 #    - master
   script:
+    - docker-compose -f docker-compose-prod.yml pull
     - docker-compose -f docker-compose-prod.yml build
+    - docker-compose -f docker-compose-prod.yml up
+
+after_script:
+  - docker-compose -f docker-compose-prod.yml down
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
