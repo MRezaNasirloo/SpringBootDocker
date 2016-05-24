@@ -1,5 +1,8 @@
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
+after_script:
+  - docker-compose -f docker-compose-ci.yml down
+  - docker-compose -f docker-compose-prod.yml down
 
 cache:
   paths:
@@ -14,10 +17,11 @@ stages:
   - deploy
 
 build_job:
-  image: pedramrn/java-gradle:with-compose
   stage: build
   script:
-    - gradle clean bootRepackage
+    - docker-compose -f docker-compose-ci.yml pull
+    - docker-compose -f docker-compose-ci.yml build
+    - docker-compose -f docker-compose-ci.yml up
   artifacts:
     paths:
       - app/build/libs
@@ -42,7 +46,4 @@ deploy_job:
     - docker-compose -f docker-compose-prod.yml pull
     - docker-compose -f docker-compose-prod.yml build
     - docker-compose -f docker-compose-prod.yml up
-
-after_script:
-  - docker-compose -f docker-compose-prod.yml down
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
