@@ -14,8 +14,10 @@ build_test_job:
 deploy_job:
   stage: deploy
   only:
-    - master
     - tags
+    - master
+  except:
+    - branches
   script:
     - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
     - docker push -t pedramrn/webapp:$CI_BUILD_TAG
