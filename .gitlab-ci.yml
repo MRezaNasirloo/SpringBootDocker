@@ -1,19 +1,22 @@
 stages:
-  - build
-  - test
+  - build_test
   - deploy
 
-build_job:
+build_test_job:
   stage: build
   script:
-    - docker run --rm --name test-runner -v ~/.m2:/root/.m2 -v ~/.gradle:/root/.gradle -v $PWD:/src -w /src pedramrn/java-gradle:oracle-8-gradle-2.10 gradle build
+    - docker run --rm --name test-runner -v ~/.m2:/root/.m2 -v ~/.gradle:/root/.gradle -v $PWD:/src -w /src pedramrn/java-gradle:oracle-8-gradle-2.10 gradle clean build
   artifacts:
     paths:
-      - app/build/libs
+      - app/build/libs/*.jar
+      downloadable: false
 
 deploy_job:
   stage: deploy
 #  only:
 #    - master
   script:
-    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
+#    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
+#    - docker push -t pedramrn/webapp:$CI_BUILD_TAG .
+    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_REF .
+    - docker push -t pedramrn/webapp:$CI_BUILD_REF .
