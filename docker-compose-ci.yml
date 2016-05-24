@@ -15,7 +15,7 @@ services:
     working_dir: /src
     environment:
       - GRADLE_VERSION=2.10
-    command: gradle clean assamble test
+    command: gradle clean assemble test
 #        restart: always
     depends_on:
       - db-postgresql

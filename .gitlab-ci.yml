@@ -43,7 +43,7 @@ deploy_job:
 #  only:
 #    - master
   script:
-    - docker-compose -f docker-compose-prod.yml pull
+#    - docker-compose -f docker-compose-prod.yml pull
     - docker-compose -f docker-compose-prod.yml build
     - docker-compose -f docker-compose-prod.yml up
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
