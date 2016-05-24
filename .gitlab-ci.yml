@@ -14,10 +14,13 @@ build_test_job:
 deploy_job:
   stage: deploy
   only:
-    - tags
+#    - tags
     - master
   except:
     - branches
   script:
-    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
-    - docker push -t pedramrn/webapp:$CI_BUILD_TAG
+    - docker login registry.gitlab.com
+    - docker build -f app/src/main/docker/Dockerfile -t registry.gitlab.com/6thsolution/spring-boot-docker:$CI_BUILD_TAG .
+    - docker push registry.gitlab.com/6thsolution/spring-boot-docker:$CI_BUILD_TAG
+#    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
+#    - docker push pedramrn/webapp:$CI_BUILD_TAG
