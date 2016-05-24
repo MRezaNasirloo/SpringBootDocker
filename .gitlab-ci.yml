@@ -1,26 +1,12 @@
-before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-after_script:
-  - docker-compose -f docker-compose-ci.yml down
-  - docker-compose -f docker-compose-prod.yml down
-
-cache:
-  paths:
-    - build
-    - app/build
-    - .gradle/wrapper
-    - .gradle/caches
-
 stages:
   - build
   - test
   - deploy
 
 build_job:
-  image: pedramrn/java-gradle:with-compose
   stage: build
   script:
-    - gradle build
+    - docker run --rm --name test-runner -v ~/.m2:/root/.m2 -v ~/.gradle:/root/.gradle -v $PWD:/src -w /src -it pedramrn/java-gradl e:oracle-8-gradle-2.10 gradle build
   artifacts:
     paths:
       - app/build/libs
@@ -42,7 +28,8 @@ deploy_job:
 #  only:
 #    - master
   script:
+      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
 #    - docker-compose -f docker-compose-prod.yml pull
-    - docker-compose -f docker-compose-prod.yml build
-    - docker-compose -f docker-compose-prod.yml up
-#      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
+#    - docker build -f app/src/main/docker/Dockerfile -t
+#    - docker-compose -f docker-compose-prod.yml up
+
