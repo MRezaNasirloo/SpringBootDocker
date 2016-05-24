@@ -1,17 +1,22 @@
 version: '2'
 services:
   app:
-    build:
-      context: .
-      dockerfile: app/src/main/docker/Dockerfile
-    image: pedramrn/webapp
+    image: pedramrn/java-gradle:oracle-8-gradle-2.10
     container_name: app
     ports:
-      - "80:8080"
+      - "8080:8080"
+      - "5005:5005"
+    volumes:
+      - ~/.m2:/root/.m2
+      - ~/.gradle:/root/.gradle
+      - .:/src
     networks:
       - main
     working_dir: /src
-    restart: always
+    environment:
+      - GRADLE_VERSION=2.10
+    command: gradle clean assemble test
+#        restart: always
     depends_on:
       - db-postgresql
       - db-mongo
