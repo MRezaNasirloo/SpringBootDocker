@@ -13,11 +13,9 @@ build_test_job:
 
 deploy_job:
   stage: deploy
-#  only:
-#    - master
-#    - tags
+  only:
+    - master
+    - tags
   script:
-#    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
-#    - docker push -t pedramrn/webapp:$CI_BUILD_TAG .
-    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_REF .
-    - docker push -t pedramrn/webapp:$CI_BUILD_REF .
+    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
+    - docker push -t pedramrn/webapp:$CI_BUILD_TAG
