@@ -19,7 +19,7 @@ deploy_job:
 #  except:
 #    - branches
   script:
-    - docker login registry.gitlab.com
+    - docker login -u qxWyr-MfGyy2ahyF4XV3 -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker build -f app/src/main/docker/Dockerfile -t registry.gitlab.com/6thsolution/spring-boot-docker:$CI_BUILD_TAG .
     - docker push registry.gitlab.com/6thsolution/spring-boot-docker:$CI_BUILD_TAG
 #    - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:$CI_BUILD_TAG .
