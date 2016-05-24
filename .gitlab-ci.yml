@@ -3,6 +3,9 @@ image: pedramrn/java-gradle:with-compose
 services:
 - docker:dind
 
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
 cache:
   paths:
     - build
@@ -30,15 +33,13 @@ build_job:
 #      - app/build/libs
 
 deploy_job:
-  variables:
-    BUILD_IMAGE: pedramrn/webapp:latest
-  image: pedramrn/docker-buidler:3
+#  variables:
+#    BUILD_IMAGE: pedramrn/webapp:latest
+#  image: pedramrn/docker-buidler:3
 #    image: docker:latest
   stage: deploy
 #  only:
 #    - master
   script:
-    - docker info
-    - ls -la app/build/libs
-    - docker run pedramrn/docker-buidler:3 --name fooBar
+    - docker-compose -f docker-compose-prod.yml build
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
