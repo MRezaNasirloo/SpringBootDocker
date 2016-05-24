@@ -1,3 +1,10 @@
+cache:
+  paths:
+    - build
+    - app/build
+    - .gradle/wrapper
+    - .gradle/caches
+
 stages:
   - build
   - test
