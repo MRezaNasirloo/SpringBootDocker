@@ -6,7 +6,6 @@ stages:
 build_job:
   stage: build
   script:
-#    - docker run --rm --name test-runner -v $PWD:/src -w /src pedramrn/java-gradle:oracle-8-gradle-2.10 gradle build
     - docker run --rm --name test-runner -v ~/.m2:/root/.m2 -v ~/.gradle:/root/.gradle -v $PWD:/src -w /src pedramrn/java-gradle:oracle-8-gradle-2.10 gradle build
   artifacts:
     paths:
@@ -14,7 +13,7 @@ build_job:
 
 deploy_job:
   stage: deploy
-  only:
-    - master
+#  only:
+#    - master
   script:
     - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
