@@ -3,13 +3,13 @@ stages:
   - deploy
 
 build_test_job:
-  stage: build
+  stage: build_test
   script:
     - docker run --rm --name test-runner -v ~/.m2:/root/.m2 -v ~/.gradle:/root/.gradle -v $PWD:/src -w /src pedramrn/java-gradle:oracle-8-gradle-2.10 gradle clean build
   artifacts:
     paths:
       - app/build/libs/*.jar
-      downloadable: false
+    downloadable: false
 
 deploy_job:
   stage: deploy
