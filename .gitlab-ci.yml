@@ -31,13 +31,14 @@ build_job:
 
 deploy_job:
   variables:
-    BUILD_IMAGE: -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
-  image: pedramrn/docker-buidler:1
+    BUILD_IMAGE: pedramrn/webapp:latest
+  image: pedramrn/docker-buidler:3
 #    image: docker:latest
   stage: deploy
 #  only:
 #    - master
   script:
+    - docker info
     - ls -la app/build/libs
-    - docker run pedramrn/docker-buidler:1
+    - docker run pedramrn/docker-buidler:3 --name fooBar
 #      - docker build -f app/src/main/docker/Dockerfile -t pedramrn/webapp:latest .
