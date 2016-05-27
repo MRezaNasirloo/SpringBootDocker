@@ -18,7 +18,7 @@ services:
 
   db-postgresql:
     image: postgres:9.5
-    container_name: db-postgresql
+    container_name: postgres.marathon.mesos
     ports:
       - "5432:5432"
     volumes:

@@ -14,7 +14,7 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:postgresql://db-postgresql:5432/postgres
+    url: jdbc:postgresql://postgres.marathon.mesos:5432/postgres
     username: user
     password: pass
     driverClassName: org.postgresql.Driver
@@ -26,7 +26,7 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:postgresql://db-postgresql:5432/postgres
+    url: jdbc:postgresql://postgres.marathon.mesos:5432/postgres
     username: user
     password: pass
     driverClassName: org.postgresql.Driver
