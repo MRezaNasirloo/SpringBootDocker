@@ -1,55 +1,49 @@
 version: '2'
 services:
   app:
-    build:
-      context: .
-      dockerfile: app/src/main/docker/Dockerfile
-    image: pedramrn/webapp:latest
-    container_name: app
-    ports:
-      - "80:8080"
+    image: pedramrn/webapp:0.1.4
+    expose:
+      - 8080
     networks:
       - main
     working_dir: /src
-    restart: always
+    restart: never
     depends_on:
       - db-postgresql
-      - db-mongo
+    links:
+      - db-postgresql
+
+  lb:
+    image: dockercloud/haproxy:1.5
+    depends_on:
+      - app
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 80:80
+    networks:
+      - main
+    links:
+      - app
+
 
   db-postgresql:
     image: postgres:9.5
-    container_name: postgres.marathon.mesos
     ports:
       - "5432:5432"
     volumes:
       - data-postgresql:/var/lib/postgresql/data
     networks:
       - main
-    restart: always
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
       - POSTGRES_DB=postgres
 
-  db-mongo:
-    image: mongo:3.2
-    container_name: db-mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - data-mongo:/data/db
-    networks:
-      - main
-    restart: always
 
 volumes:
-  data-mongo:
-
   data-postgresql:
-
-  data-maven:
-
-  data-gradle:
 
 networks:
   main:

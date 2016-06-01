@@ -1,4 +1,5 @@
 ## Spring Boot Docker
+[![build status](https://gitlab.com/6thsolution/spring-boot-docker/badges/master/build.svg)](https://gitlab.com/6thsolution/spring-boot-docker/commits/master)
 
 An isolated development and production environments for spring boot.
 

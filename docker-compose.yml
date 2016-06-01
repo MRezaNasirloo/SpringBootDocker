@@ -19,11 +19,9 @@ services:
 #        restart: always
     depends_on:
       - db-postgresql
-      - db-mongo
 
   db-postgresql:
     image: postgres:9.5
-    container_name: postgres.marathon.mesos
     ports:
       - "5432:5432"
     volumes:
@@ -36,25 +34,8 @@ services:
       - POSTGRES_PASSWORD=pass
       - POSTGRES_DB=postgres
 
-  db-mongo:
-    image: mongo:3.2
-    container_name: db-mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - data-mongo:/data/db
-    networks:
-      - main
-    restart: always
-
 volumes:
-  data-mongo:
-
   data-postgresql:
-
-  data-maven:
-
-  data-gradle:
 
 networks:
   main:

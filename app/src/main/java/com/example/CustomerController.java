@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -22,7 +24,12 @@ public class CustomerController {
 
     @RequestMapping(value = "/hello", method = GET)
     public String hello() {
-        return "Hello World";
+        try {
+            return String.format("Hello World from %s", InetAddress.getLocalHost().toString());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "Cannot find the host name.";
     }
 
     @RequestMapping(value = "/customers", method = GET)
