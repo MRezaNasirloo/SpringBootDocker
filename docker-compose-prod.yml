@@ -1,7 +1,7 @@
 version: '2'
 services:
   app:
-    image: pedramrn/webapp:0.1.4
+    image: pedramrn/webapp:0.1.5
     expose:
       - 8080
     networks:
@@ -26,6 +26,7 @@ services:
 
 
   db-postgresql:
+    container_name: dbpostgres
     image: postgres:9.5
     ports:
       - "5432:5432"
