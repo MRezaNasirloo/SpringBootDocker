@@ -10,8 +10,6 @@ services:
     restart: never
     depends_on:
       - db-postgresql
-    links:
-      - db-postgresql
 
   lb:
     image: dockercloud/haproxy:1.5
@@ -23,8 +21,8 @@ services:
       - 80:80
     networks:
       - main
-    links:
-      - app
+    environment:
+      - ADDITIONAL_SERVICES=springbootdockertemplate:app
 
 
   db-postgresql:
